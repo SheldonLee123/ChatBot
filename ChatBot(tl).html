@@ -1,0 +1,215 @@
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ChatBot</title>
+    <style type="text/css">
+      *{font-size: 14px; padding:0; margin:0;}
+      .main{
+       position: relative;
+       margin: 20px auto;
+       border: 1px solid steelblue;
+       width: 430px;
+       height: 400px;
+     }
+     .msgInput{
+       display: block;
+       width: 406px;
+       height: 60px;
+       margin: 10px auto;
+
+     }
+     .sendbtn{
+       position: absolute;
+       width: 100px;
+       height: 29px;
+       bottom: 5px;
+       right: 10px;
+     }
+     .content{
+       list-style: none;
+       width: 410px;
+       height: 280px;
+       margin: 5px auto;
+       border: 1px dotted #D1D3D6;
+       overflow-y: scroll;
+     }
+     .msgContent{
+       width:auto;
+       max-width: 250px;
+       height: auto;
+       word-break: break-all;
+       margin: 5px;
+       padding: 3px;
+       border-radius: 5px;
+     }
+
+     .content .left{
+       float: left;
+       text-align: left;
+       background-color: lightgrey;
+     }
+     .content .right{
+       float: right;
+       text-align: right;
+       background-color: yellowgreen;
+     }
+
+
+   </style>
+   <script type="text/javascript">
+
+
+ 
+  //快捷键 发送
+  document.onkeypress = function (event) {
+   var e = event || window.event;
+   var keycode = e.keyCode || e.which;
+   console.log(e)
+   if( keycode==10){//判断同时按下ctrl 和enter
+    sendMsg();
+   }
+  }
+
+function sendMsg() {
+
+   var str = document.getElementById('msg_input').value;
+   var ul = document.getElementById('content');
+
+   var newLi = document.createElement('li');
+   newLi.innerHTML = str;
+   newLi.className = 'msgContent right';
+   ul.appendChild(newLi);
+
+   var div = document.createElement('div');
+   div.style = 'clear:both';
+   ul.appendChild(div);
+
+   newLi.scrollIntoView();//将元素滚动到可见位置
+
+   document.getElementById('msg_input').value = '';
+
+   xmlHttp=GetXmlHttpObject()
+
+   if (xmlHttp==null)
+
+   {
+
+    alert ("您的浏览器不支持AJAX！");
+
+    return;
+
+   }
+
+  var url="http://www.tuling123.com/openapi/api?key=e825286159f9f57db1b597995d72ae2b";
+
+  url=url+"&info="+str;
+
+  url=url+"&userid=1234";
+
+  xmlHttp.onreadystatechange=stateChanged;
+
+  xmlHttp.open("GET",url,true);
+
+  xmlHttp.send(null);
+
+
+}
+
+
+function stateChanged()
+
+{
+
+   var ul = document.getElementById('content');
+
+  if (xmlHttp.readyState==4)
+
+  {
+
+    var msg=eval('(' + xmlHttp.responseText + ')'); 
+
+
+    var newLi = document.createElement('li');
+    if(msg.url==null)
+    {
+        newLi.innerHTML = msg.text;
+    }
+    else
+    {
+        newLi.innerHTML = msg.text+"<br/>"+msg.url;
+    }
+    
+    newLi.className = 'msgContent left';
+    ul.appendChild(newLi);
+
+    var div = document.createElement('div');
+    div.style = 'clear:both';
+    ul.appendChild(div);
+    str = '';
+
+    newLi.scrollIntoView();//将元素滚动到可见位置
+
+  }
+
+}
+
+
+function GetXmlHttpObject()
+
+{
+
+  var xmlHttp=null;
+
+  try
+
+    {
+
+    // Firefox, Opera 8.0+, Safari
+
+    xmlHttp=new XMLHttpRequest();
+
+    }
+
+  catch(e)
+
+    {
+
+    // Internet Explorer
+
+    try
+
+      {
+
+      xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+
+      }
+
+    catch (e)
+
+      {
+
+      xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+
+      }
+
+    }
+
+return xmlHttp;
+
+}
+   
+   
+</script>
+
+</head>
+
+<body>
+ <div id="main" class="main">
+  <ul id="content" class="content">
+  </ul>
+  <textarea id="msg_input" class="msgInput"></textarea>
+  <button id="sendbtn" class="sendbtn" onclick="sendMsg()">send</button>
+</div>
+</body>
+</html>
