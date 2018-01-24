@@ -8,7 +8,7 @@ sys.setdefaultencoding("utf-8")
 
 
 def Turing(words):
-    Tuling_API_KEY = "a2bd87304ad4415baaaee4d249ea7eee"
+    Tuling_API_KEY = "x"
 
     body = {"key":Tuling_API_KEY,"info":words.encode("utf-8"),"userid":'155236'}
 
