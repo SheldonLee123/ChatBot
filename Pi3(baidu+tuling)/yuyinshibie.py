@@ -12,8 +12,8 @@ def get_access_token():
 	url = 'https://openapi.baidu.com/oauth/2.0/token' 
 	body = { 
 	"grant_type":"client_credentials", 
-	"client_id" :"D4fEzs3o52sxiQKU9Y6MvRpg", 
-	"client_secret":"eTy6ED9VYkEsybpv9bfaUMlvlFwgm6WR", 
+	"client_id" :"x", 
+	"client_secret":"x", 
 	}
 
 	r = requests.post(url,data=body,verify=True)
