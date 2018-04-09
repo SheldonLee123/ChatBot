@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ChatBot DEMO: ipanda</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui-theme-default.css" />
+    <meta name="description" content="Talk like a Man!">
+  </head>
+  <body>
+    <div class="botui-app-container" id="delivery-bot">
+      <bot-ui></bot-ui>
+    </div>
+    <script src="https://cdn.jsdelivr.net/vue/latest/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/botui/build/botui.js"></script>
+    <script>
+var botui = new BotUI('delivery-bot'),
+    address = 'House 1, First Ave.';
+
+botui.message
+  .bot('如果世界上的猪全死了怎么办？')
+
+  .then(function(){
+    return botui.action.text({
+      delay:500,
+      action:{
+        placeholder:'说点什么吧'
+      }
+    }).then(function(){
+      botui.message
+      .bot({
+        delay:500,
+        content:'猜一个歌名'
+      })
+    }).then(function(){
+      return botui.action.text({
+        delay:1000,
+        action:{
+          placeholder:'再说点什么吧'
+        }
+      })
+    }).then(function(){
+        botui.message
+        .bot({
+          delay:500,
+          content:'至少还有你啊🐽'
+        })
+      })
+
+  })
+
+    </script>
+  </body>
+</html>
+
